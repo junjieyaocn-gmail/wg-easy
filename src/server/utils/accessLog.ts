@@ -1,5 +1,5 @@
 import childProcess from 'node:child_process';
-import fs from 'node:fs';
+import type { Stats } from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 
@@ -218,7 +218,7 @@ async function tailDnsLog(
   dnsLogFile: string,
   accessLogFile: string
 ): Promise<void> {
-  let stat: fs.Stats;
+  let stat: Stats;
   try {
     stat = await fsp.stat(dnsLogFile);
   } catch {

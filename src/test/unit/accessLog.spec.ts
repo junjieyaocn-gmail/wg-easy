@@ -1,6 +1,23 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import { accessLogTestExports } from '#server/utils/accessLog';
+
+vi.mock('#server/utils/config', () => ({
+  WG_ENV: {
+    ACCESS_LOG_ENABLED: true,
+    ACCESS_LOG_DIR: '/tmp/wgeasy-test-logs',
+    ACCESS_LOG_TRAFFIC_INTERVAL_MINUTES: 5,
+    ACCESS_LOG_MAX_SIZE_MB: 100,
+    DISABLE_IPV6: true,
+  },
+}));
+
+vi.mock('#server/utils/Database', () => ({
+  default: {
+    clients: { getAll: vi.fn().mockResolvedValue([]) },
+    userConfigs: { get: vi.fn().mockResolvedValue({ defaultDns: [] }) },
+  },
+}));
 
 const {
   parseDnsmasqQueryLine,

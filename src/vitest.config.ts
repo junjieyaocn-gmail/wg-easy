@@ -12,6 +12,8 @@ export default defineConfig({
             '#db': fileURLToPath(
               new URL('./server/database/', import.meta.url)
             ),
+            '@@': fileURLToPath(new URL('./', import.meta.url)),
+            '#shared': fileURLToPath(new URL('./shared', import.meta.url)),
           },
         },
         test: {
