@@ -70,6 +70,20 @@ export const WG_ENV = {
   DISABLE_PASSWORD_AUTH: process.env.DISABLE_PASSWORD_AUTH === 'true',
   /** Proxies allowed to provide forwarded request information */
   TRUSTED_PROXIES: parseTrustedProxies(process.env.TRUSTED_PROXIES),
+  /** Per-client website-visit and traffic logging to log files */
+  ACCESS_LOG_ENABLED: process.env.ACCESS_LOG_ENABLED !== 'false',
+  /** Directory for access.log / traffic.log (use a persisted volume) */
+  ACCESS_LOG_DIR: process.env.ACCESS_LOG_DIR ?? '/etc/wireguard',
+  /** How often per-client traffic counters are written to traffic.log, in minutes */
+  ACCESS_LOG_TRAFFIC_INTERVAL_MINUTES: Number.parseInt(
+    process.env.ACCESS_LOG_TRAFFIC_INTERVAL_MINUTES ?? '5',
+    10
+  ),
+  /** Rotate a log file once it grows past this size, in megabytes */
+  ACCESS_LOG_MAX_SIZE_MB: Number.parseInt(
+    process.env.ACCESS_LOG_MAX_SIZE_MB ?? '100',
+    10
+  ),
 };
 
 if (WG_ENV.OAUTH_PROVIDERS && WG_ENV.OAUTH_PROVIDERS.length > 0) {

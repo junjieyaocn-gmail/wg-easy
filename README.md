@@ -32,6 +32,7 @@ You have found the easiest way to install & manage WireGuard on any Linux host!
 - CIDR support
 - 2FA support
 - Per-client firewall filtering (requires iptables)
+- Per-client access & traffic logging (fork feature): website visits (domain names via DNS query logging) are written to `/etc/wireguard/access.log`, per-client traffic counters are snapshotted to `/etc/wireguard/traffic.log`. Configure with `ACCESS_LOG_ENABLED` (default `true`), `ACCESS_LOG_DIR`, `ACCESS_LOG_TRAFFIC_INTERVAL_MINUTES` (default `5`), `ACCESS_LOG_MAX_SIZE_MB` (default `100`). Disable with `ACCESS_LOG_ENABLED=false`. Note: only domain names are visible (HTTPS encrypts the rest); DNS-over-HTTPS/TLS bypasses the local resolver and is not logged.
 - OIDC support (Google, GitHub, Authelia, Authentik, etc.)
 
 > [!NOTE]

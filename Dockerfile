@@ -61,6 +61,7 @@ RUN chmod +x /usr/bin/awg /usr/bin/awg-quick
 # Install Linux packages
 RUN apk add --no-cache \
     dpkg \
+    dnsmasq \
     dumb-init \
     iptables \
     ip6tables \

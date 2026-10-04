@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import { createDebug } from 'obug';
 
 import Database from '#server/utils/Database';
+import { accessLog } from '#server/utils/accessLog';
 import { mergeClientStatuses } from '#server/utils/clientStatus';
 import { OLD_ENV, WG_ENV } from '#server/utils/config';
 import { firewall } from '#server/utils/firewall';
@@ -238,6 +239,10 @@ class WireGuard {
     await this.#applyFirewallRules(wgInterface);
     WG_DEBUG('Firewall rules applied successfully.');
 
+    WG_DEBUG('Starting access logging...');
+    await accessLog.start(wgInterface);
+    WG_DEBUG('Access logging started.');
+
     WG_DEBUG('Starting Cron Job...');
     await this.startCronJob();
     WG_DEBUG('Cron Job started successfully.');
@@ -256,6 +261,7 @@ class WireGuard {
   // Shutdown wireguard
   async Shutdown() {
     const wgInterface = await Database.interfaces.get();
+    await accessLog.stop(wgInterface);
     await wg.down(wgInterface.name).catch(() => {});
   }
 
